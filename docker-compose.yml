@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+    app:
+        build:
+            context: ./EasyLiving
+        expose:
+            - "4000"
+        volumes:
+            - ./EasyLiving/bin:/app/bin
+    nginx:
+        build:
+            context: ./nginx
+        volumes:
+                # - ../src:/var/www
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/sites/:/etc/nginx/sites-available
+            - ./admin/app/dist:/var/www/
+    angular:
+        build:
+            context: ./admin
+        volumes: 
+            - ./admin/app/dist:/app/dist
+    public:
+        build:
+            context: ./public
+        expose:
+            - "3000"
+        volumes:
+            - ./EasyLiving/EasyLiving.db:/app/EasyLiving.db
+            - ./EasyLiving/Storage:/app/public/Storage
+
+          

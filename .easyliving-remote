@@ -1,0 +1,5 @@
+docker-machine create\
+ --driver generic\
+ --generic-ip-address=139.162.149.181\
+ --generic-ssh-key ~/.ssh/id_rsa\
+ --generic-ssh-user=easyliving easyliving

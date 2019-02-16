@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    app:
+        build:
+          context: ./EasyLiving
+          dockerfile: Dockerfile-deploy
+        expose:
+            - "4000"
+        volumes:
+            - ./volumes/Storage:/app/Storage
+            - ./volumes/EasyLiving.db:/app/EasyLiving.db
+    nginx:
+        build:
+            context: ./nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/sites/:/etc/nginx/sites-available
+            - ./volumes/adminUI:/var/www/
+    public:
+        build:
+            context: ./public
+        expose:
+            - "3000"
+        volumes:
+            - ./volumes/EasyLiving.db:/app/EasyLiving.db
+            - ./volumes/Storage:/app/public/Storage
+
+          
